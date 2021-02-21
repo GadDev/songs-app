@@ -7,24 +7,27 @@ import deleteSong from '../queries/deleteSongs';
 
 class SongList extends Component {
 	onSongDelete(id) {
-		this.props.mutate({
-			variables: {
-				id,
-			}
-		}).then(() => {
-			this.props.data.refetch()
-		});
+		this.props
+			.mutate({
+				variables: {
+					id,
+				},
+			})
+			.then(() => {
+				this.props.data.refetch();
+			});
 	}
 
 	renderSongs() {
 		return this.props.data.songs.map(({ title, id }) => {
 			return (
 				<li className='collection-item' key={id}>
-					<span>{title}</span>
+					<Link to={`songs/${id}`}>
+						<span>{title}</span>
+					</Link>
 					<i
 						className='material-icons right'
 						onClick={() => this.onSongDelete(id)}
-						style={{ cursor: 'pointer' }}
 					>
 						delete
 					</i>

@@ -22,16 +22,14 @@ class SongCreate extends Component {
 				variables: {
 					title: this.state.title,
 				},
-				refreshQueries: [{ query }],
+				refetchQueries: [{ query }],
 			})
 			.then(() => {
-				console.log('back');
 				hashHistory.push('/');
 			})
 			.catch((error) => console.log(error));
 	}
 	render() {
-		console.log(this.props);
 		return (
 			<div>
 				<Link to='/'>Back</Link>
