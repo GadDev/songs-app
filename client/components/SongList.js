@@ -1,14 +1,16 @@
-import { divide } from 'lodash';
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
+
+import query from '../queries/fetchSongs';
+import deleteSong from '../queries/deleteSongs';
 
 class SongList extends Component {
 	renderSongs() {
 		return this.props.data.songs.map((song) => {
 			return (
-				<li className='collection' key={song.id}>
-					{song.title}
+				<li className='collection-item' key={song.id}>
+					<h5>{song.title}</h5>
 				</li>
 			);
 		});
@@ -20,18 +22,16 @@ class SongList extends Component {
 		}
 		return (
 			<div>
-				<ul>{this.renderSongs()}</ul>
+				<ul className='collection'>{this.renderSongs()}</ul>
+				<Link
+					to='/songs/new'
+					className='btn-floating btn-large red right'
+				>
+					<i className='material-icons'>add</i>
+				</Link>
 			</div>
 		);
 	}
 }
 
-const query = gql`
-	query getSongs {
-		songs {
-			title
-		}
-	}
-`;
-
-export default graphql(query)(SongList);
+export default graphql(deleteSong)(graphql(query)(SongList));
